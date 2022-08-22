@@ -1,6 +1,18 @@
 <nav-bar>
     <ng-container>
+        <div class="container-title">
+            <h2>Lista de Técnicos</h2>
+            <a mat-fab color="primary" class="mat-elevation-z8" routerLink="new">
+                <mat-icon>add</mat-icon>
+            </a>
+        </div>
+
         <div class="mat-elevation-z8">
+            <mat-form-field appearance="standard" class="full-width">
+                <mat-label>Filter</mat-label>
+                <input matInput (keyup)="applyFilter($event)" #input>
+            </mat-form-field>
+
             <table mat-table [dataSource]="dataSource">
 
                 <ng-container matColumnDef="id">
@@ -52,6 +64,6 @@
 
             <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
             </mat-paginator>
-        </div>    
+        </div>
     </ng-container>
 </nav-bar>

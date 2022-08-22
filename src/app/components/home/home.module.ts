@@ -15,7 +15,8 @@ import { NavBarModule } from '../nav-bar/nav-bar.module';
     CommonModule,
     MaterialModule,
     HomeRoutingModule,
-    NavBarModule
+    NavBarModule,
+    
   ],
   exports: [
     HomeComponent
