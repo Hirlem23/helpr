@@ -22,13 +22,13 @@ export class TecnicoCreateComponent implements OnInit {
 
   private perfis: number[] = [];
 
-  private toastr: ToastrService;
+  private toast: ToastrService;
   private service: TecnicoService;
   private router: Router;
 
-  constructor(service: TecnicoService, toastr: ToastrService, router: Router) {
+  constructor(service: TecnicoService, toast: ToastrService, router: Router) {
     this.service = service;
-    this.toastr = toastr;
+    this.toast = toast;
     this.router = router;
       
    }
@@ -52,13 +52,24 @@ export class TecnicoCreateComponent implements OnInit {
     if(form.valid) {
         this.service.insert(this.tecnico).subscribe({
           next: response => {
-            this.toastr.success("Técnico cadastrado com sucesso!", "Sucesso");
+            this.toast.success("Técnico cadastrado com sucesso!", "Sucesso");
             this.router.navigate(["/tecnicos"]);
+          },
+          error: errorResponse => {
+            let errors = errorResponse.error.errors;
+            if(errors != undefined) {
+              errors.forEach((error:any) => {
+                this.toast.error(error.message, "Erro");
+              });
+            }
+            else {
+              this.toast.error(errorResponse.error.message, "Erro");
+            }
           }
         });
     }
     else {
-        this.toastr.error("Dados inválidos!", "Erro");
+        this.toast.error("Dados inválidos!", "Erro");
     }
   }
 
