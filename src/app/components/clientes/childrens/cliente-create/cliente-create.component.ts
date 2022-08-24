@@ -2,17 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Route, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Tecnico } from 'src/app/models/tecnico';
-import { TecnicoService } from 'src/app/services/tecnico.service';
+import { Cliente } from 'src/app/models/cliente';
+import { ClienteService } from 'src/app/services/cliente.service';
 
 @Component({
-  selector: 'app-tecnico-create',
-  templateUrl: './tecnico-create.component.html',
-  styleUrls: ['./tecnico-create.component.scss']
+  selector: 'app-cliente-create',
+  templateUrl: './cliente-create.component.html',
+  styleUrls: ['./cliente-create.component.scss']
 })
-export class TecnicoCreateComponent implements OnInit {
+export class ClienteCreateComponent implements OnInit {
 
-  public tecnico: Tecnico = {
+  public cliente: Cliente = {
     nome: "",
     cpf: "",
     email: "",
@@ -23,10 +23,10 @@ export class TecnicoCreateComponent implements OnInit {
   private perfis: number[] = [];
 
   private toast: ToastrService;
-  private service: TecnicoService;
+  private service: ClienteService;
   private router: Router;
 
-  constructor(service: TecnicoService, toast: ToastrService, router: Router) {
+  constructor(service: ClienteService, toast: ToastrService, router: Router) {
     this.service = service;
     this.toast = toast;
     this.router = router;
@@ -40,20 +40,20 @@ export class TecnicoCreateComponent implements OnInit {
     for(let i = 0; i < this.perfis.length; i++) {
       if(this.perfis[i] === perfil) {
         this.perfis.splice(i, 1);
-        this.tecnico.perfis = this.perfis;
+        this.cliente.perfis = this.perfis;
         return;
       }
     }
     this.perfis.push(perfil);
-    this.tecnico.perfis = this.perfis;
+    this.cliente.perfis = this.perfis;
   }
 
   create(form: NgForm) {
     if(form.valid) {
-        this.service.insert(this.tecnico).subscribe({
+        this.service.insert(this.cliente).subscribe({
           next: response => {
-            this.toast.success("Técnico cadastrado com sucesso!", "Sucesso");
-            this.router.navigate(["/tecnicos"]);
+            this.toast.success("Cliente cadastrado com sucesso!", "Sucesso");
+            this.router.navigate(["/clientes"]);
           },
           error: errorResponse => {
             let errors = errorResponse.error.errors;

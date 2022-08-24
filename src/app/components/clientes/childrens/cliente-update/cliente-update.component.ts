@@ -2,18 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Tecnico } from 'src/app/models/tecnico';
-import { TecnicoService } from 'src/app/services/tecnico.service';
+import { Cliente } from 'src/app/models/cliente';
+
+import { ClienteService } from 'src/app/services/cliente.service';
 
 @Component({
-  selector: 'app-tecnico-update',
-  templateUrl: './tecnico-update.component.html',
-  styleUrls: ['./tecnico-update.component.scss']
+  selector: 'app-cliente-update',
+  templateUrl: './cliente-update.component.html',
+  styleUrls: ['./cliente-update.component.scss']
 })
-export class TecnicoUpdateComponent implements OnInit {
+export class ClienteUpdateComponent implements OnInit {
 
   
-  public tecnico: Tecnico = {
+  public cliente: Cliente = {
     nome: "",
     cpf: "",
     email: "",
@@ -25,11 +26,11 @@ export class TecnicoUpdateComponent implements OnInit {
   public perfisChecked: boolean[] = [false, false, false];
 
   private toast: ToastrService;
-  private service: TecnicoService;
+  private service: ClienteService;
   private router: Router;
   private route: ActivatedRoute;
 
-  constructor(service: TecnicoService, toast: ToastrService, router: Router, route: ActivatedRoute) {
+  constructor(service: ClienteService, toast: ToastrService, router: Router, route: ActivatedRoute) {
     this.service = service;
     this.toast = toast;
     this.router = router;
@@ -39,9 +40,9 @@ export class TecnicoUpdateComponent implements OnInit {
   ngOnInit(): void {
     let id: string | null = this.route.snapshot.paramMap.get("id");
     if(id != null) {
-      this.service.findById(Number.parseInt(id)).subscribe(tecnico => {
-        this.tecnico = tecnico;
-        this.initializePerfis(<string[]>this.tecnico.perfis);
+      this.service.findById(Number.parseInt(id)).subscribe(cliente => {
+        this.cliente = cliente;
+        this.initializePerfis(<string[]>this.cliente.perfis);
       });
     }
   }
@@ -52,7 +53,7 @@ export class TecnicoUpdateComponent implements OnInit {
         case "ADMIN":
           this.addPerfil(0);
           break;
-        case "TECNICO":
+        case "CLIENTE":
           this.addPerfil(1);
           break;
         case "CLIENTE":
@@ -67,21 +68,21 @@ export class TecnicoUpdateComponent implements OnInit {
       if(this.perfis[i] === perfil) {
         this.perfis.splice(i, 1);
         this.perfisChecked[perfil] = false;
-        this.tecnico.perfis = this.perfis;
+        this.cliente.perfis = this.perfis;
         return;
       }
     }
     this.perfis.push(perfil);
     this.perfisChecked[perfil] = true;
-    this.tecnico.perfis = this.perfis;
+    this.cliente.perfis = this.perfis;
   }
 
   update(form: NgForm) {
     if(form.valid) {
-      this.service.update(this.tecnico).subscribe({
+      this.service.update(this.cliente).subscribe({
         next: response => {
-          this.toast.success("Técnico editado com sucesso!", "Sucesso");
-          this.router.navigate(["/tecnicos"]);
+          this.toast.success("Cliente editado com sucesso!", "Sucesso");
+          this.router.navigate(["/clientes"]);
         },
         error: errorResponse => {
           let errors = errorResponse.error.errors;
