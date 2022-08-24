@@ -1,7 +1,7 @@
 <nav-bar>
     <ng-container>
-        <h2>Cadastrar Técnico</h2>
-        <form #form="ngForm" (ngSubmit)="create(form)">
+        <h2>Editar Técnico</h2>
+        <form #form="ngForm" (ngSubmit)="update(form)">
             <mat-form-field class="full-width" appearance="fill">
                 <mat-label>Nome</mat-label>
                 <input type="text" name="nome" matInput placeholder="Ex. Gabriel Braga" required maxlength="50" [(ngModel)]="tecnico.nome">
@@ -20,15 +20,13 @@
             </mat-form-field>
 
             <section class="section">
-                <mat-checkbox color="primary" class="margin" (change)="addPerfil(0)">Administrador</mat-checkbox>
-                <mat-checkbox color="primary" class="margin" (change)="addPerfil(1)">Técnico</mat-checkbox>
-                <mat-checkbox color="primary" class="margin" (change)="addPerfil(2)">Cliente</mat-checkbox>
+                <mat-checkbox color="primary" class="margin" (change)="addPerfil(0)" [checked]="perfisChecked[0]">Administrador</mat-checkbox>
+                <mat-checkbox color="primary" class="margin" (change)="addPerfil(1)" [checked]="perfisChecked[1]">Técnico</mat-checkbox>
+                <mat-checkbox color="primary" class="margin" (change)="addPerfil(2)" [checked]="perfisChecked[2]">Cliente</mat-checkbox>
             </section>
 
-            <button type="submit" mat-raised-button color="primary">Cadastrar</button>
+            <button type="submit" mat-raised-button color="primary">Editar</button>
             <button type="button" mat-raised-button color="warn">Cancelar</button>
         </form>
-
-        <h1>{{ tecnico | json }}</h1>
     </ng-container>
 </nav-bar>
