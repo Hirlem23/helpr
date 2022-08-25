@@ -5,22 +5,28 @@ import { ChamadosRoutingModule } from './chamados-routing.module';
 import { ChamadosComponent } from './chamados.component';
 import { MaterialModule } from 'src/app/shared/material/material.module';
 import { NavBarModule } from '../nav-bar/nav-bar.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PipesModule } from 'src/app/pipes/pipes.module';
+import { ChamadoCreateComponent } from './childrens/chamado-create/chamado-create.component';
 
 
 @NgModule({
   declarations: [
-    ChamadosComponent
+    ChamadosComponent,
+    ChamadoCreateComponent
   ],
   imports: [
     CommonModule,
     ChamadosRoutingModule,
     NavBarModule,
     MaterialModule,
-    FormsModule
+    FormsModule,
+    PipesModule,
+    ReactiveFormsModule
   ],
   exports: [
-    ChamadosComponent
+    ChamadosComponent,
+    ChamadoCreateComponent
   ]
 })
 export class ChamadosModule { }
